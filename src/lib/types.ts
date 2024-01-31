@@ -7,6 +7,7 @@ export type Station = {
   votes: number;
   favicon: string;
   tags: string;
+  stationuuid: string;
 };
 
 export type CountrySelection = {

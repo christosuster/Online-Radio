@@ -8,6 +8,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { SearchIcon } from "lucide-react";
+import { useAudio } from "@/contexts/audioContext";
 
 const Browse = () => {
   const [stations, setStations] = useState<Station[]>([]);
@@ -17,8 +18,8 @@ const Browse = () => {
   const [countries, setCountries] = useState<CountrySelection[]>([]);
   const [languages, setLanguages] = useState<LanguageSelection[]>([]);
   const [loading, setLoading] = useState(false);
-  const [optionsLoading, setOptionsLoading] = useState(false);
-  const [search, setSearch] = useState("");
+
+  const { setLikedStations } = useAudio();
 
   const ref = useRef("");
 
@@ -30,7 +31,9 @@ const Browse = () => {
 
   useEffect(() => {
     setLoading(true);
-    setOptionsLoading(true);
+
+    const liked = localStorage.getItem("liked");
+    setLikedStations(liked ? JSON.parse(liked) : []);
 
     if (selectedCountry) {
       axios
@@ -86,8 +89,7 @@ const Browse = () => {
       .then((res) => {
         setLanguages(res.data);
       })
-      .catch((err) => console.log(err))
-      .finally(() => setOptionsLoading(false));
+      .catch((err) => console.log(err));
   }, [selectedCountry, selectedLanguage, selectedName]);
 
   console.log(selectedCountry);

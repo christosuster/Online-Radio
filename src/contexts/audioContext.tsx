@@ -12,6 +12,9 @@ type AudioContextType = {
   setVolume: React.Dispatch<React.SetStateAction<number>>;
   muted: boolean;
   setMuted: React.Dispatch<React.SetStateAction<boolean>>;
+  likedStations: Station[];
+  setLikedStations: React.Dispatch<React.SetStateAction<Station[]>>;
+  handleLike: (station: Station) => void;
 };
 
 const AudioContext = createContext<AudioContextType>({
@@ -24,6 +27,7 @@ const AudioContext = createContext<AudioContextType>({
     url: "",
     votes: 0,
     serveruuid: "",
+    stationuuid: "",
   },
   setTrack: () => null,
   sound: null,
@@ -33,6 +37,9 @@ const AudioContext = createContext<AudioContextType>({
   setVolume: () => null,
   muted: false,
   setMuted: () => null,
+  likedStations: [],
+  setLikedStations: () => null,
+  handleLike: () => null,
 });
 
 export function AudioProvider({ children }: { children: React.ReactNode }) {
@@ -41,8 +48,39 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
   const [playing, setPlaying] = useState(false);
   const [volume, setVolume] = useState(0.5);
   const [muted, setMuted] = useState(false);
+  const [likedStations, setLikedStations] = useState<Station[]>([]);
+
+  const handleLike = (station: Station) => {
+    const liked = localStorage.getItem("liked");
+
+    if (liked) {
+      const likedStations = JSON.parse(liked);
+      const stationExists = likedStations.find(
+        (likedStation: Station) =>
+          likedStation.stationuuid === station.stationuuid
+      );
+
+      if (stationExists) {
+        const newLikedStations = likedStations.filter(
+          (likedStation: Station) => likedStation.url !== station.url
+        );
+        localStorage.setItem("liked", JSON.stringify(newLikedStations));
+        setLikedStations(newLikedStations);
+      } else {
+        const newLikedStations = [...likedStations, station];
+        localStorage.setItem("liked", JSON.stringify(newLikedStations));
+        setLikedStations(newLikedStations);
+      }
+    } else {
+      localStorage.setItem("liked", JSON.stringify([station]));
+      setLikedStations([station]);
+    }
+  };
 
   useEffect(() => {
+    const liked = localStorage.getItem("liked");
+    setLikedStations(liked ? JSON.parse(liked) : []);
+
     if (!track) return;
     var newSound = new Howl({
       src: [track.url],
@@ -77,6 +115,8 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
   return (
     <AudioContext.Provider
       value={{
+        likedStations,
+        setLikedStations,
         track,
         setTrack,
         sound,
@@ -86,6 +126,7 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
         setVolume,
         muted,
         setMuted,
+        handleLike,
       }}
     >
       {children}

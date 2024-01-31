@@ -16,6 +16,7 @@ const Sidebar = () => {
         open ? "w-40" : "w-0"
       } transition-all transition-300`}
     >
+      <h1 className="text-2xl font-semibold">Radio Station 23</h1>
       <ul>
         {links.map((link) => (
           <li key={link.name}>

@@ -2,9 +2,23 @@ import { Station } from "@/lib/types";
 import { Play, Heart, Pause } from "lucide-react";
 import { Button } from "./ui/button";
 import { useAudio } from "@/contexts/audioContext";
+import { useEffect, useState } from "react";
 
 const Card = ({ station }: { station: Station }) => {
-  const { track, setTrack, sound, playing } = useAudio();
+  const { track, setTrack, sound, playing, likedStations, handleLike } =
+    useAudio();
+  const [isLiked, setIsLiked] = useState(false);
+
+  useEffect(() => {
+    if (
+      likedStations.find((liked) => liked.stationuuid === station.stationuuid)
+    ) {
+      setIsLiked(true);
+    } else {
+      setIsLiked(false);
+    }
+  }, [likedStations, station]);
+
   let stationImage = station.favicon;
   if (station.favicon === "") {
     stationImage =
@@ -63,8 +77,13 @@ const Card = ({ station }: { station: Station }) => {
             </Button>
           )}
 
-          <Button className="shadow-lg p-4 h-auto w-auto rounded-full">
-            <Heart className=" " />
+          <Button
+            onClick={() => handleLike(station)}
+            className={`shadow-lg p-4 h-auto w-auto rounded-full  `}
+          >
+            <Heart
+              className={`${isLiked ? "fill-red-500 text-red-400" : ""}`}
+            />
           </Button>
         </div>
       </div>
