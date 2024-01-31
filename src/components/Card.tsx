@@ -38,7 +38,7 @@ const Card = ({ station }: { station: Station }) => {
           </div>
         </div>
         <div className="flex items-center justify-center  gap-10 p-2">
-          {track === station.url ? (
+          {track?.url === station.url ? (
             playing ? (
               <Button
                 onClick={() => sound?.pause()}
@@ -56,7 +56,7 @@ const Card = ({ station }: { station: Station }) => {
             )
           ) : (
             <Button
-              onClick={() => setTrack(station.url)}
+              onClick={() => setTrack(station)}
               className="shadow-lg p-4 h-auto w-auto rounded-full"
             >
               <Play className=" " />

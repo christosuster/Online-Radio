@@ -1,9 +1,10 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { Howl } from "howler";
+import { Station } from "@/lib/types";
 
 type AudioContextType = {
-  track: string;
-  setTrack: React.Dispatch<React.SetStateAction<string>>;
+  track: Station | undefined;
+  setTrack: React.Dispatch<React.SetStateAction<Station | undefined>>;
   sound: Howl | null | undefined;
   playing: boolean;
   setPlaying: React.Dispatch<React.SetStateAction<boolean>>;
@@ -14,7 +15,16 @@ type AudioContextType = {
 };
 
 const AudioContext = createContext<AudioContextType>({
-  track: "",
+  track: {
+    country: "",
+    favicon: "",
+    language: "",
+    name: "",
+    tags: "",
+    url: "",
+    votes: 0,
+    serveruuid: "",
+  },
   setTrack: () => null,
   sound: null,
   playing: false,
@@ -26,7 +36,7 @@ const AudioContext = createContext<AudioContextType>({
 });
 
 export function AudioProvider({ children }: { children: React.ReactNode }) {
-  const [track, setTrack] = useState<string>("");
+  const [track, setTrack] = useState<Station>();
   const [sound, setSound] = useState<Howl | null>(null);
   const [playing, setPlaying] = useState(false);
   const [volume, setVolume] = useState(0.5);
@@ -35,7 +45,7 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (!track) return;
     var newSound = new Howl({
-      src: [track],
+      src: [track.url],
       html5: true,
       onplay: () => {
         setPlaying(true);
@@ -46,11 +56,15 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
       onstop: () => {
         setPlaying(false);
       },
-      onvolume: (vol) => {
-        console.log(vol);
+      onvolume: () => {
+        // console.log(newSound?.volume());
+        // if (newSound?.volume() === 0) {
+        //   setMuted(true);
+        // } else {
+        //   setMuted(false);
+        // }
       },
-
-      mute: muted,
+      onmute: () => {},
     });
 
     sound?.stop();

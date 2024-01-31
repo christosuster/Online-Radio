@@ -4,13 +4,17 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Volume, Volume2 } from "lucide-react";
+import { Volume, Volume2, VolumeX } from "lucide-react";
 import { Slider } from "./ui/slider";
 import { useAudio } from "@/contexts/audioContext";
 
 const VolumeControl = () => {
-  const { sound, playing, setPlaying } = useAudio();
+  const { sound, playing, setPlaying, setMuted, muted } = useAudio();
 
+  const handleMute = () => {
+    sound?.mute(!sound?.mute());
+    setMuted(sound?.mute() ? true : false);
+  };
   return (
     <Popover>
       <PopoverTrigger>
@@ -19,6 +23,13 @@ const VolumeControl = () => {
         </Button>
       </PopoverTrigger>
       <PopoverContent className="flex gap-3">
+        <Button
+          onClick={handleMute}
+          variant="ghost"
+          className={`p-2 ${muted ? "bg-primary" : " text-foreground/50"}`}
+        >
+          <VolumeX />
+        </Button>
         <Slider
           onValueChange={(value) => sound?.volume(value[0])}
           orientation="horizontal"

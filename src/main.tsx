@@ -14,6 +14,7 @@ import Favorites from "./page/Favorites.tsx";
 import RadioMap from "./page/RadioMap.tsx";
 import { NavProvider } from "./contexts/navContext.tsx";
 import { AudioProvider } from "./contexts/audioContext.tsx";
+import { Toaster } from "./components/ui/toaster.tsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -31,6 +32,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       <NavProvider>
         <AudioProvider>
           <RouterProvider router={router} />
+          <Toaster />
         </AudioProvider>
       </NavProvider>
     </ThemeProvider>
