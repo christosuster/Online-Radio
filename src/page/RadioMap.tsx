@@ -11,11 +11,23 @@ import { useAudio } from "@/contexts/audioContext";
 import { useNav } from "@/contexts/navContext";
 
 const RadioMap = () => {
-  const { track, setTrack, sound, playing } = useAudio();
+  const { track, setTrack, sound, playing, setLoadingAudio } = useAudio();
   const { setOpen } = useNav();
 
   const [data, setData] = useState<StationLocation[]>([]);
   const [loading, setLoading] = useState(false);
+
+  const handlePlay = () => {
+    setLoadingAudio(true);
+    sound?.play();
+  };
+
+  const handleSetTrack = (prop: StationLocation) => {
+    setLoadingAudio(true);
+
+    setTrack(prop as any);
+  };
+
   useEffect(() => {
     setLoading(true);
     axios
@@ -40,7 +52,7 @@ const RadioMap = () => {
       <Button
         variant={"unstyled"}
         onClick={() => setOpen(true)}
-        className="absolute left-4 top-4 h-16 w-16 lg:hidden "
+        className="absolute left-4 top-4 h-16 w-16 lg:hidden  text-foreground"
       >
         <Menu className="w-full h-full" />
       </Button>
@@ -83,7 +95,7 @@ const RadioMap = () => {
                         </Button>
                       ) : (
                         <Button
-                          onClick={() => sound?.play()}
+                          onClick={handlePlay}
                           className="shadow-lg p-3 h-auto w-auto rounded-full"
                         >
                           <Play className=" " />
@@ -91,7 +103,7 @@ const RadioMap = () => {
                       )
                     ) : (
                       <Button
-                        onClick={() => setTrack(item as any)}
+                        onClick={() => handleSetTrack(item)}
                         className="shadow-lg p-3 h-auto w-auto rounded-full"
                       >
                         <Play className=" " />

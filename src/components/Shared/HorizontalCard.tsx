@@ -5,9 +5,27 @@ import { useAudio } from "@/contexts/audioContext";
 import { useEffect, useState } from "react";
 
 const HorizontalCard = ({ station }: { station: Station }) => {
-  const { track, setTrack, sound, playing, likedStations, handleLike } =
-    useAudio();
+  const {
+    track,
+    setTrack,
+    sound,
+    playing,
+    likedStations,
+    handleLike,
+    setLoadingAudio,
+  } = useAudio();
   const [isLiked, setIsLiked] = useState(false);
+
+  const handlePlay = () => {
+    setLoadingAudio(true);
+    sound?.play();
+  };
+
+  const handleSetTrack = () => {
+    setLoadingAudio(true);
+
+    setTrack(station);
+  };
 
   useEffect(() => {
     if (
@@ -28,7 +46,7 @@ const HorizontalCard = ({ station }: { station: Station }) => {
   const tags = station.tags.split(",");
 
   return (
-    <div className="border overflow-hidden grid grid-cols-5 rounded-lg shadow-md ">
+    <div className="border-2 border-primary overflow-hidden grid grid-cols-5 rounded-lg shadow-md ">
       <div className="col-span-2  flex justify-center py-5">
         <img
           className=" rounded-full h-20 w-20 object-cover object-center opacity-90 dark:opacity-80 bg-black "
@@ -46,7 +64,7 @@ const HorizontalCard = ({ station }: { station: Station }) => {
             {tags.map((tag, i) => (
               <span
                 key={i}
-                className="bg-gray-300 text-gray-700 rounded-full px-1 text-xs font-medium"
+                className="bg-primary/50 text-foreground rounded-full px-1 text-xs font-medium"
               >
                 {tag}
               </span>
@@ -67,7 +85,7 @@ const HorizontalCard = ({ station }: { station: Station }) => {
           ) : (
             <Button
               variant={"unstyled"}
-              onClick={() => sound?.play()}
+              onClick={handlePlay}
               className={`text-foreground hover:text-accent p-3 h-14 w-14 rounded-full bg-none`}
             >
               <Play className="h-full w-full " />
@@ -76,7 +94,7 @@ const HorizontalCard = ({ station }: { station: Station }) => {
         ) : (
           <Button
             variant={"unstyled"}
-            onClick={() => setTrack(station)}
+            onClick={handleSetTrack}
             className={`hover:text-accent text-foreground p-3 h-14 w-14 rounded-full bg-none`}
           >
             <Play className="  h-full w-full" />

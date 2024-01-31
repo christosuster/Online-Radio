@@ -19,7 +19,7 @@ const Favorites = () => {
       <Button
         variant={"unstyled"}
         onClick={() => setOpen(true)}
-        className="absolute left-4 top-4 h-16 w-16 lg:hidden "
+        className="absolute left-4 top-4 h-16 w-16 lg:hidden  text-foreground"
       >
         <Menu className="w-full h-full" />
       </Button>

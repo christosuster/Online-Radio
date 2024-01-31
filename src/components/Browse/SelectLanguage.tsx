@@ -33,8 +33,6 @@ export function SelectLanguage({
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState("");
 
-  console.log(value);
-
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>

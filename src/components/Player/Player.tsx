@@ -1,14 +1,27 @@
 import { useAudio } from "@/contexts/audioContext";
 import { Button } from "../ui/button";
-import { Heart, Pause, Play } from "lucide-react";
+import { Heart, Loader2, Pause, Play } from "lucide-react";
 import VolumeControl from "./VolumeControl";
 import TimerControl from "./TimerControl";
 import { useEffect, useState } from "react";
 
 const Player = () => {
-  const { sound, playing, track, handleLike, likedStations } = useAudio();
+  const {
+    sound,
+    playing,
+    track,
+    handleLike,
+    likedStations,
+    loadingAudio,
+    setLoadingAudio,
+  } = useAudio();
 
   const [isLiked, setIsLiked] = useState(false);
+
+  const handlePlay = () => {
+    setLoadingAudio(true);
+    sound?.play();
+  };
 
   useEffect(() => {
     if (
@@ -23,7 +36,7 @@ const Player = () => {
   return (
     <div className="h-20 flex justify-center">
       {sound ? (
-        <div className="flex-1 grid grid-cols-3 border-t px-3 gap-3">
+        <div className="flex-1 grid grid-cols-3 border-t border-primary px-3 gap-3">
           <div className="flex items-center gap-1 overflow-hidden">
             <img
               className="h-12 w-12 rounded-full object-cover object-center animate-spin-slow"
@@ -42,7 +55,7 @@ const Player = () => {
           <div className="flex justify-center items-center">
             {playing ? (
               <Button
-                className="shadow-lg transition-all p-2 h-12 w-12 rounded-full"
+                className="shadow-lg  transition-all p-2 h-12 w-12 rounded-full"
                 onClick={() => sound?.pause()}
                 disabled={sound ? false : true}
                 variant={"outline"}
@@ -51,12 +64,16 @@ const Player = () => {
               </Button>
             ) : (
               <Button
-                className="shadow-lg transition-all p-2 h-12 w-12 rounded-full"
-                onClick={() => sound?.play()}
+                className="shadow-lg  transition-all p-2 h-12 w-12 rounded-full"
+                onClick={handlePlay}
                 disabled={sound ? false : true}
                 variant={"default"}
               >
-                <Play className=" " />
+                {loadingAudio ? (
+                  <Loader2 className="animate-spin" />
+                ) : (
+                  <Play className=" " />
+                )}
               </Button>
             )}
           </div>
@@ -68,12 +85,10 @@ const Player = () => {
             <Button
               variant={"unstyled"}
               onClick={() => track && handleLike(track!)}
-              className={`text-foreground p-3 h-12 w-12 rounded-full bg-none hover:text-red-500 transition-all`}
+              className={`p-2 text-foreground hover:text-red-500 transition-all`}
             >
               <Heart
-                className={`h-full w-full  ${
-                  isLiked ? "fill-red-500 text-red-500" : ""
-                }`}
+                className={` ${isLiked ? "fill-red-500 text-red-500" : ""}`}
               />
             </Button>
           </div>

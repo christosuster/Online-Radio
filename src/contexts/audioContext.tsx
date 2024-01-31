@@ -16,6 +16,8 @@ type AudioContextType = {
   likedStations: Station[];
   setLikedStations: React.Dispatch<React.SetStateAction<Station[]>>;
   handleLike: (station: Station) => void;
+  loadingAudio: boolean;
+  setLoadingAudio: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const AudioContext = createContext<AudioContextType>({
@@ -41,6 +43,8 @@ const AudioContext = createContext<AudioContextType>({
   likedStations: [],
   setLikedStations: () => null,
   handleLike: () => null,
+  loadingAudio: false,
+  setLoadingAudio: () => null,
 });
 
 export function AudioProvider({ children }: { children: React.ReactNode }) {
@@ -52,6 +56,7 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
   const [volume, setVolume] = useState(0.5);
   const [muted, setMuted] = useState(false);
   const [likedStations, setLikedStations] = useState<Station[]>([]);
+  const [loadingAudio, setLoadingAudio] = useState(false);
 
   const handleLike = (station: Station) => {
     const liked = localStorage.getItem("liked");
@@ -97,11 +102,22 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
     var newSound = new Howl({
       src: [track.url],
       html5: true,
+      onload: () => {
+        console.log("loaded");
+
+        setLoadingAudio(false);
+      },
       onplay: () => {
+        console.log("playing");
+
         setPlaying(true);
+        setLoadingAudio(false);
       },
       onpause: () => {
+        console.log("paused");
+
         setPlaying(false);
+        setLoadingAudio(false);
       },
       onstop: () => {
         setPlaying(false);
@@ -139,6 +155,8 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
         muted,
         setMuted,
         handleLike,
+        loadingAudio,
+        setLoadingAudio,
       }}
     >
       {children}

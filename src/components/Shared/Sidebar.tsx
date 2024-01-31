@@ -33,8 +33,9 @@ const Sidebar = () => {
         {links.map((link) => (
           <li className="w-full" key={link.name}>
             <NavLink
+              onClick={() => setOpen(false)}
               to={link.path}
-              className=" flex gap-2 text-lg items-center text-foreground/60 transition-all transition-500 border-r-4 border-transparent hover:border-foreground hover:text-foreground"
+              className=" flex gap-2 text-lg items-center text-foreground/60 transition-all transition-500 border-r-4 border-transparent hover:border-primary hover:text-foreground"
             >
               {link.icon} {link.name}
             </NavLink>
