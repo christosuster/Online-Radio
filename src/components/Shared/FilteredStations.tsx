@@ -1,6 +1,7 @@
 import { Station } from "@/lib/types";
 import Card from "./Card";
 import { SkeletonCard } from "./SkeletonCard";
+import HorizontalCard from "./HorizontalCard";
 
 const FilteredStations = ({
   stations,
@@ -24,7 +25,7 @@ const FilteredStations = ({
         </>
       )}
       {stations.map((station, i) => (
-        <Card key={i} station={station} />
+        <HorizontalCard key={i} station={station} />
       ))}
     </div>
   );

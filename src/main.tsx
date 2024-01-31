@@ -9,7 +9,7 @@ import {
   createRoutesFromElements,
 } from "react-router-dom";
 import Browse from "./page/Browse.tsx";
-import { ThemeProvider } from "./components/theme-provider.tsx";
+import { ThemeProvider } from "./contexts/theme-provider.tsx";
 import Favorites from "./page/Favorites.tsx";
 import RadioMap from "./page/RadioMap.tsx";
 import { NavProvider } from "./contexts/navContext.tsx";

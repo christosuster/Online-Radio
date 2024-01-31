@@ -1,6 +1,6 @@
 import { Station } from "@/lib/types";
 import { Play, Heart, Pause } from "lucide-react";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import { useAudio } from "@/contexts/audioContext";
 import { useEffect, useState } from "react";
 

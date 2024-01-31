@@ -1,16 +1,18 @@
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { CountrySelection, LanguageSelection, Station } from "@/lib/types";
-import FilteredStations from "@/components/FilteredStations";
-import { SelectCountry } from "@/components/SelectCountry";
-import { SelectLanguage } from "@/components/SelectLanguage";
-import { useToast } from "@/components/ui/use-toast";
+import FilteredStations from "@/components/Shared/FilteredStations";
+import { SelectCountry } from "@/components/Browse/SelectCountry";
+import { SelectLanguage } from "@/components/Browse/SelectLanguage";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { SearchIcon } from "lucide-react";
+import { Menu, SearchIcon } from "lucide-react";
 import { useAudio } from "@/contexts/audioContext";
+import { useNav } from "@/contexts/navContext";
 
 const Browse = () => {
+  const { setOpen, open } = useNav();
+
   const [stations, setStations] = useState<Station[]>([]);
   const [selectedCountry, setSelectedCountry] = useState<String | null>(null);
   const [selectedName, setSelectedName] = useState<String | null>(null);
@@ -95,8 +97,19 @@ const Browse = () => {
   console.log(selectedCountry);
 
   return (
-    <div className="flex flex-col gap-3">
-      <div className="flex justify-center gap-3">
+    <div className="flex flex-col gap-3 relative">
+      <div className="py-6 text-center">
+        <h1 className="text-5xl font-bold">Browse</h1>
+        <h1 className="text-2xl leading-8  font-thin">Our Top 100 Stations</h1>
+      </div>
+      <Button
+        variant={"unstyled"}
+        onClick={() => setOpen(true)}
+        className="absolute left-4 top-4 h-16 w-16 lg:hidden "
+      >
+        <Menu className="w-full h-full" />
+      </Button>
+      <div className="flex justify-center gap-3 flex-wrap">
         <SelectCountry
           data={countries}
           selectedCountry={selectedCountry}
@@ -109,9 +122,9 @@ const Browse = () => {
           setSelectedLanguage={setSelectedLanguage}
           setSelectedCountry={setSelectedCountry}
         />
-        <div className="flex">
+        <div className="flex  min-w-[200px]">
           <Input
-            className="border-2 rounded-lg focus-visible:ring-0 border-primary rounded-r-none "
+            className="border-2 rounded-lg focus-visible:ring-0 border-primary rounded-r-none font-bold dark:placeholder-primary placeholder-primary"
             placeholder="Search by name"
             onChange={(e) => (ref.current = e.target.value)}
             type="text"

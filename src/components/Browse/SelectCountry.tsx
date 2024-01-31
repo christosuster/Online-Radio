@@ -57,7 +57,7 @@ export function SelectCountry({
         <Command>
           <CommandInput placeholder={`Search by country`} />
           <CommandEmpty>{`Country not found!`}</CommandEmpty>
-          <CommandGroup>
+          <CommandGroup className="h-[300px] overflow-y-auto">
             {data.map((item, i) => (
               <CommandItem
                 key={i}
@@ -79,7 +79,10 @@ export function SelectCountry({
                       : "opacity-0"
                   )}
                 />
-                {item.name}
+                <div className="">
+                  <h1 className="font-semibold ">{item.name}</h1>
+                  <h1 className="text-xs">Stations: {item.stationcount}</h1>
+                </div>
               </CommandItem>
             ))}
           </CommandGroup>

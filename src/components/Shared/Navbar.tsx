@@ -1,7 +1,7 @@
-import { useTheme } from "./theme-provider";
+import { useTheme } from "../../contexts/theme-provider";
 import { Switch } from "@/components/ui/switch";
 import { Menu, Moon, Sun, X } from "lucide-react";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import { useNav } from "@/contexts/navContext";
 
 const Navbar = () => {

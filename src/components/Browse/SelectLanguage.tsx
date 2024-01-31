@@ -56,7 +56,7 @@ export function SelectLanguage({
         <Command>
           <CommandInput placeholder={`Search by language`} />
           <CommandEmpty>{`Language not found!`}</CommandEmpty>
-          <CommandGroup>
+          <CommandGroup className="h-[300px] overflow-y-auto">
             {data.map((item, i) => (
               <CommandItem
                 key={i}
@@ -79,7 +79,13 @@ export function SelectLanguage({
                       : "opacity-0"
                   )}
                 />
-                {item.name}
+                <div className="">
+                  <h1 className="font-semibold ">
+                    {item.name.charAt(0).toUpperCase() +
+                      item.name.slice(1).toLowerCase()}
+                  </h1>
+                  <h1 className="text-xs">Stations: {item.stationcount}</h1>
+                </div>
               </CommandItem>
             ))}
           </CommandGroup>

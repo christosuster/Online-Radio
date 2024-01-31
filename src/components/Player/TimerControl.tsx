@@ -50,7 +50,10 @@ const TimerControl = () => {
   return (
     <Dialog>
       <DialogTrigger>
-        <Button className="p-2">
+        <Button
+          variant={"unstyled"}
+          className="p-2 text-foreground hover:text-accent"
+        >
           <Timer />
         </Button>
       </DialogTrigger>

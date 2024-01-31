@@ -5,7 +5,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Volume, Volume2, VolumeX } from "lucide-react";
-import { Slider } from "./ui/slider";
+import { Slider } from "../ui/slider";
 import { useAudio } from "@/contexts/audioContext";
 
 const VolumeControl = () => {
@@ -18,7 +18,10 @@ const VolumeControl = () => {
   return (
     <Popover>
       <PopoverTrigger>
-        <Button className="p-2 ">
+        <Button
+          variant={"unstyled"}
+          className="p-2 text-foreground hover:text-accent"
+        >
           <Volume2 />
         </Button>
       </PopoverTrigger>

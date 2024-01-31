@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { Howl } from "howler";
 import { Station } from "@/lib/types";
+import { useToast } from "@/components/ui/use-toast";
 
 type AudioContextType = {
   track: Station | undefined;
@@ -43,6 +44,8 @@ const AudioContext = createContext<AudioContextType>({
 });
 
 export function AudioProvider({ children }: { children: React.ReactNode }) {
+  const { toast } = useToast();
+
   const [track, setTrack] = useState<Station>();
   const [sound, setSound] = useState<Howl | null>(null);
   const [playing, setPlaying] = useState(false);
@@ -66,14 +69,23 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
         );
         localStorage.setItem("liked", JSON.stringify(newLikedStations));
         setLikedStations(newLikedStations);
+        toast({
+          description: "Station removed from favorites",
+        });
       } else {
         const newLikedStations = [...likedStations, station];
         localStorage.setItem("liked", JSON.stringify(newLikedStations));
         setLikedStations(newLikedStations);
+        toast({
+          description: "Station added to favorites",
+        });
       }
     } else {
       localStorage.setItem("liked", JSON.stringify([station]));
       setLikedStations([station]);
+      toast({
+        description: "Station added to favorites",
+      });
     }
   };
 
