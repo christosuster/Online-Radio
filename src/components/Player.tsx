@@ -11,7 +11,7 @@ const Player = () => {
 
   const handleLike = () => {};
   return (
-    <>
+    <div>
       {sound ? (
         <div className="flex-1 grid grid-cols-3 border-t p-3 gap-3">
           <div className="flex items-center overflow-hidden">
@@ -61,7 +61,7 @@ const Player = () => {
           <h1 className="text-xl">Select a station</h1>
         </div>
       )}
-    </>
+    </div>
   );
 };
 

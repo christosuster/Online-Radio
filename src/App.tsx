@@ -9,7 +9,7 @@ const App = () => {
       <Sidebar />
       <div className="flex flex-col flex-1 h-full overflow-hidden">
         <Navbar />
-        <main className="flex flex-col flex-grow-1 flex-shrink-1 p-3 overflow-y-auto">
+        <main className="flex flex-col flex-1 p-3 overflow-y-auto">
           <Outlet />
         </main>
         <Player />

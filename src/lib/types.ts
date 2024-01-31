@@ -20,3 +20,16 @@ export type LanguageSelection = {
   stationcount: number;
   iso_639: string;
 };
+
+export type StationLocation = {
+  name: string;
+  serveruuid: string;
+  tags: string;
+  url: string;
+  language: string;
+  votes: number;
+  favicon: string;
+  country: string;
+  geo_lat: number;
+  geo_long: number;
+};

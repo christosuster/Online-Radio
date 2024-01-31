@@ -22,7 +22,7 @@ const VolumeControl = () => {
           <Volume2 />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="flex gap-3">
+      <PopoverContent className="flex gap-3 z-30">
         <Button
           onClick={handleMute}
           variant="ghost"
