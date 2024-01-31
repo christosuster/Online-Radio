@@ -1,0 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 260 20% 97%;
+    --foreground: 270 8% 5%;
+    --card: 260 20% 97%;
+    --card-foreground: 270 8% 5%;
+    --popover: 260 20% 97%;
+    --popover-foreground: 270 8% 5%;
+    --primary: 255 29% 53%;
+    --primary-foreground: 260 20% 97%;
+    --secondary: 255 38% 72%;
+    --secondary-foreground: 270 8% 5%;
+    --muted: 261 20% 20%;
+    --muted-foreground: 272 8% 70%;
+    --accent: 256 49% 65%;
+    --accent-foreground: 270 8% 5%;
+    --destructive: 0 85% 60%;
+    --destructive-foreground: 270 8% 5%;
+    --border: 261 20% 20%;
+    --input: 261 20% 20%;
+    --ring: 256 49% 40%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 260 20% 3%;
+    --foreground: 270 8% 95%;
+    --card: 260 20% 3%;
+    --card-foreground: 270 8% 95%;
+    --popover: 260 20% 3%;
+    --popover-foreground: 270 8% 95%;
+    --primary: 255 29% 47%;
+    --primary-foreground: 270 8% 95%;
+    --secondary: 255 38% 28%;
+    --secondary-foreground: 270 8% 95%;
+    --muted: 261 20% 80%;
+    --muted-foreground: 270 8% 95%;
+    --accent: 256 49% 35%;
+    --accent-foreground: 270 8% 95%;
+    --destructive: 0 62% 30%;
+    --destructive-foreground: 276 10% 10%;
+    --border: 259 20% 60%;
+    --input: 261 20% 80%;
+    --ring: 256 49% 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+.active {
+  color: orangered;
+}

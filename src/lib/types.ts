@@ -1,0 +1,22 @@
+export type Station = {
+  name: string;
+  serveruuid: string;
+  country: string;
+  language: string;
+  url: string;
+  votes: number;
+  favicon: string;
+  tags: string;
+};
+
+export type CountrySelection = {
+  name: string;
+  stationcount: number;
+  iso_3166_1: string;
+};
+
+export type LanguageSelection = {
+  name: string;
+  stationcount: number;
+  iso_639: string;
+};
