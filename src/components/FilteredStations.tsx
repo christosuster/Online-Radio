@@ -11,9 +11,6 @@ const FilteredStations = ({
 }) => {
   return (
     <div className="grid xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-3">
-      {stations.map((station, i) => (
-        <Card key={i} station={station} />
-      ))}
       {loading && (
         <>
           <SkeletonCard />
@@ -26,6 +23,9 @@ const FilteredStations = ({
           <SkeletonCard />
         </>
       )}
+      {stations.map((station, i) => (
+        <Card key={i} station={station} />
+      ))}
     </div>
   );
 };

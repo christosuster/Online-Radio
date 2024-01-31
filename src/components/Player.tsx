@@ -9,6 +9,7 @@ import { useToast } from "./ui/use-toast";
 const Player = () => {
   const { sound, playing, track } = useAudio();
 
+  const handleLike = () => {};
   return (
     <>
       {sound ? (
@@ -50,7 +51,7 @@ const Player = () => {
           <div className="flex justify-end gap-2 items-center">
             <VolumeControl />
             <TimerControl />
-            <Button className="p-2">
+            <Button onClick={handleLike} className="p-2">
               <Heart />
             </Button>
           </div>

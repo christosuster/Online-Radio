@@ -1,19 +1,32 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { CountrySelection, LanguageSelection, Station } from "@/lib/types";
 import FilteredStations from "@/components/FilteredStations";
 import { SelectCountry } from "@/components/SelectCountry";
 import { SelectLanguage } from "@/components/SelectLanguage";
 import { useToast } from "@/components/ui/use-toast";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { SearchIcon } from "lucide-react";
 
 const Browse = () => {
   const [stations, setStations] = useState<Station[]>([]);
   const [selectedCountry, setSelectedCountry] = useState<String | null>(null);
+  const [selectedName, setSelectedName] = useState<String | null>(null);
   const [selectedLanguage, setSelectedLanguage] = useState<String | null>(null);
   const [countries, setCountries] = useState<CountrySelection[]>([]);
   const [languages, setLanguages] = useState<LanguageSelection[]>([]);
   const [loading, setLoading] = useState(false);
   const [optionsLoading, setOptionsLoading] = useState(false);
+  const [search, setSearch] = useState("");
+
+  const ref = useRef("");
+
+  const makeSearch = () => {
+    setSelectedName(ref.current);
+    setSelectedCountry(null);
+    setSelectedLanguage(null);
+  };
 
   useEffect(() => {
     setLoading(true);
@@ -39,6 +52,16 @@ const Browse = () => {
         })
         .catch((err) => console.log(err))
         .finally(() => setLoading(false));
+    } else if (selectedName) {
+      axios
+        .get(
+          `https://de1.api.radio-browser.info/json/stations/search?name=${selectedName}`
+        )
+        .then((res) => {
+          setStations(res.data);
+        })
+        .catch((err) => console.log(err))
+        .finally(() => setLoading(false));
     } else {
       axios
         .get("https://de1.api.radio-browser.info/json/stations/topvote/100")
@@ -48,13 +71,6 @@ const Browse = () => {
         .catch((err) => console.log(err))
         .finally(() => setLoading(false));
     }
-    // axios
-    //   .get("https://de1.api.radio-browser.info/json/stations/topvote/100")
-    //   .then((res) => {
-    //     setStations(res.data);
-    //   })
-    //   .catch((err) => console.log(err))
-    //   .finally(() => setLoading(false));
 
     axios
       .get("https://de1.api.radio-browser.info/json/countries")
@@ -72,13 +88,13 @@ const Browse = () => {
       })
       .catch((err) => console.log(err))
       .finally(() => setOptionsLoading(false));
-  }, [selectedCountry, selectedLanguage]);
+  }, [selectedCountry, selectedLanguage, selectedName]);
 
   console.log(selectedCountry);
 
   return (
-    <div className="">
-      <div>
+    <div className="flex flex-col gap-3">
+      <div className="flex justify-center gap-3">
         <SelectCountry
           data={countries}
           selectedCountry={selectedCountry}
@@ -91,6 +107,17 @@ const Browse = () => {
           setSelectedLanguage={setSelectedLanguage}
           setSelectedCountry={setSelectedCountry}
         />
+        <div className="flex">
+          <Input
+            className="border-2 rounded-lg focus-visible:ring-0 border-primary rounded-r-none "
+            placeholder="Search by name"
+            onChange={(e) => (ref.current = e.target.value)}
+            type="text"
+          />
+          <Button className="rounded-l-none" onClick={makeSearch}>
+            <SearchIcon />
+          </Button>
+        </div>
       </div>
       <FilteredStations stations={stations} loading={loading} />
     </div>
