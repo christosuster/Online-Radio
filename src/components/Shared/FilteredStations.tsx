@@ -1,5 +1,4 @@
 import { Station } from "@/lib/types";
-import Card from "./Card";
 import { SkeletonCard } from "./SkeletonCard";
 import HorizontalCard from "./HorizontalCard";
 

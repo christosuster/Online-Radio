@@ -1,5 +1,4 @@
 import "leaflet/dist/leaflet.css";
-import L from "leaflet";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
 
@@ -7,13 +6,13 @@ import { StationLocation } from "@/lib/types";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Loader2, Menu, Pause, Play, PlayIcon } from "lucide-react";
+import { Loader2, Menu, Pause, Play } from "lucide-react";
 import { useAudio } from "@/contexts/audioContext";
 import { useNav } from "@/contexts/navContext";
 
 const RadioMap = () => {
   const { track, setTrack, sound, playing } = useAudio();
-  const { setOpen, open } = useNav();
+  const { setOpen } = useNav();
 
   const [data, setData] = useState<StationLocation[]>([]);
   const [loading, setLoading] = useState(false);

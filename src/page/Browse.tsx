@@ -11,7 +11,7 @@ import { useAudio } from "@/contexts/audioContext";
 import { useNav } from "@/contexts/navContext";
 
 const Browse = () => {
-  const { setOpen, open } = useNav();
+  const { setOpen } = useNav();
 
   const [stations, setStations] = useState<Station[]>([]);
   const [selectedCountry, setSelectedCountry] = useState<String | null>(null);

@@ -3,7 +3,6 @@ import { Button } from "../ui/button";
 import { Heart, Pause, Play } from "lucide-react";
 import VolumeControl from "./VolumeControl";
 import TimerControl from "./TimerControl";
-import { useToast } from "../ui/use-toast";
 import { useEffect, useState } from "react";
 
 const Player = () => {
