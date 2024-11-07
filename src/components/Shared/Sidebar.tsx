@@ -58,7 +58,7 @@ const Sidebar = () => {
         <a
           target="_blank"
           className="underline underline-offset-2"
-          href="https://www.christosuster.me/"
+          href="https://www.christosuster.dev/"
         >
           Christos
         </a>
